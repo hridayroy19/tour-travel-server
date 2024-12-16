@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import userRouter from './module/user/user.router'
 import tourRouter from './module/tour/tour.route'
+import globalErrorHandler from './middlewares/globalErrorHandler'
 
 const app = express()
 
@@ -18,5 +19,8 @@ app.get('/', (req: Request, res: Response) => {
     message: 'Server Live ⚡',
   })
 })
+
+//golbal error handelar
+app.use(globalErrorHandler)
 
 export default app

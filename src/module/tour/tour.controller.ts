@@ -26,9 +26,13 @@ const createTour = async (req: Request, res: Response) => {
 const getTours = async (req: Request, res: Response) => {
   try {
     const result = await tourService.getTours()
-    
-    sendResponse(res,{statusCode:httpStatus.OK,message:'Tours get successfully',status:true,data:result})
 
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      message: 'Tours get successfully',
+      status: true,
+      data: result,
+    })
   } catch (error) {
     res.send({
       success: false,
@@ -43,8 +47,12 @@ const getSingleTour = async (req: Request, res: Response) => {
     const id = req.params.id
     const result = await tourService.getSingleTour(id)
 
-    sendResponse(res,{statusCode:httpStatus.OK, message:'Tour get successfully', status:true,data:result})
-
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      message: 'Tour get successfully',
+      status: true,
+      data: result,
+    })
   } catch (error) {
     res.send({
       success: false,
@@ -60,8 +68,12 @@ const updateTour = async (req: Request, res: Response) => {
     const body = req.body
     const result = await tourService.updateTour(id, body)
 
-    sendResponse(res,{statusCode:httpStatus.OK,message:'Tour updated successfully',status:true,data:result})
-
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      message: 'Tour updated successfully',
+      status: true,
+      data: result,
+    })
   } catch (error) {
     res.send({
       success: false,
@@ -74,9 +86,13 @@ const deleteTour = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
     const result = await tourService.deleteTour(id)
-    
-    sendResponse(res,{statusCode:httpStatus.OK,message:'Tour deleted successfully',status:true,data:result})
 
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      message: 'Tour deleted successfully',
+      status: true,
+      data: result,
+    })
   } catch (error) {
     res.send({
       success: false,
@@ -91,8 +107,12 @@ const getNextSchedule = async (req: Request, res: Response) => {
     const id = req.params.id
     const result = await tourService.getNextSchedule(id)
 
-    sendResponse(res,{statusCode:httpStatus.OK,message:'Tours nextschedule successfully',status:true,data:result})
-
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      message: 'Tours nextschedule successfully',
+      status: true,
+      data: result,
+    })
   } catch (error) {
     res.send({
       success: false,
