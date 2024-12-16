@@ -2,7 +2,7 @@ import Tour from '../tour/tour.model'
 import { IBooking } from './booking.interface'
 import { Book } from './booking.model'
 
-const createBooking = async (payload: IBooking) => {
+const createBookingIntoDB = async (payload: IBooking) => {
   const { tour, bookingSlots } = payload
 
   const requireTour = await Tour.findByIdAndUpdate(tour)
@@ -38,6 +38,17 @@ const createBooking = async (payload: IBooking) => {
   return booking
 }
 
+
+const getBookngIntoDB = async()=>{
+  const result = await Book.find()
+  return result
+}
+
+
+
+
+
 export const bookingService = {
-  createBooking,
+   createBookingIntoDB,
+  getBookngIntoDB
 }
