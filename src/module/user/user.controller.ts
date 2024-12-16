@@ -1,6 +1,6 @@
 // req and res manage
 
-import { Request, Response } from 'express'
+
 import { userService } from './user.service'
 import sendResponse from '../../utils/sendResponse'
 import httpStatus from 'http-status'

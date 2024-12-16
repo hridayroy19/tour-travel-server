@@ -32,17 +32,17 @@ const deleteTour = async (id: string) => {
   return result
 }
 
-const getNextSchedule = async (id: string) => {
-  // console.log(id);
+// const getNextSchedule = async (id: string) => {
+//   // console.log(id);
 
-  const tour = await Tour.getNextNearestStartDateAndEndData()
-  //   const nextSchedule = tour?.getNextNearestStartDateAndEndData()
+//   const tour = await Tour.getNextNearestStartDateAndEndData()
+//   //   const nextSchedule = tour?.getNextNearestStartDateAndEndData()
 
-  return {
-    tour,
-    // nextSchedule,
-  }
-}
+//   return {
+//     tour,
+//     // nextSchedule,
+//   }
+// }
 
 export const tourService = {
   createTour,
@@ -50,5 +50,5 @@ export const tourService = {
   getSingleTour,
   updateTour,
   deleteTour,
-  getNextSchedule,
+  // getNextSchedule,
 }
