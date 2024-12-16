@@ -14,10 +14,8 @@ const createTour = async (req: Request, res: Response) => {
       message: 'Tour create successfuly',
       data: result,
     })
-
   } catch (error) {
     res.send({
-      status: httpStatus.BAD_REQUEST,
       success: false,
       message: 'Something went wrong',
       error,
@@ -28,12 +26,9 @@ const createTour = async (req: Request, res: Response) => {
 const getTours = async (req: Request, res: Response) => {
   try {
     const result = await tourService.getTours()
+    
+    sendResponse(res,{statusCode:httpStatus.OK,message:'Tours get successfully',status:true,data:result})
 
-    res.send({
-      success: true,
-      message: 'Tours get successfully',
-      result,
-    })
   } catch (error) {
     res.send({
       success: false,
@@ -48,11 +43,8 @@ const getSingleTour = async (req: Request, res: Response) => {
     const id = req.params.id
     const result = await tourService.getSingleTour(id)
 
-    res.send({
-      success: true,
-      message: 'Tour get successfully',
-      result,
-    })
+    sendResponse(res,{statusCode:httpStatus.OK, message:'Tour get successfully', status:true,data:result})
+
   } catch (error) {
     res.send({
       success: false,
@@ -68,11 +60,8 @@ const updateTour = async (req: Request, res: Response) => {
     const body = req.body
     const result = await tourService.updateTour(id, body)
 
-    res.send({
-      success: true,
-      message: 'Tour updated successfully',
-      result,
-    })
+    sendResponse(res,{statusCode:httpStatus.OK,message:'Tour updated successfully',status:true,data:result})
+
   } catch (error) {
     res.send({
       success: false,
@@ -85,12 +74,9 @@ const deleteTour = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
     const result = await tourService.deleteTour(id)
+    
+    sendResponse(res,{statusCode:httpStatus.OK,message:'Tour deleted successfully',status:true,data:result})
 
-    res.send({
-      success: true,
-      message: 'Tour deleted successfully',
-      result,
-    })
   } catch (error) {
     res.send({
       success: false,
@@ -105,11 +91,8 @@ const getNextSchedule = async (req: Request, res: Response) => {
     const id = req.params.id
     const result = await tourService.getNextSchedule(id)
 
-    res.send({
-      success: true,
-      message: 'Tour deleted successfully',
-      result,
-    })
+    sendResponse(res,{statusCode:httpStatus.OK,message:'Tours nextschedule successfully',status:true,data:result})
+
   } catch (error) {
     res.send({
       success: false,

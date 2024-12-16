@@ -10,12 +10,3 @@ userRouter.delete('/:userId', userController.deleteUser)
 userRouter.get('/', userController.getUser)
 
 export default userRouter
-
-
-
-
-
-
- 
-
-

@@ -47,10 +47,10 @@ const getSingleUser = async (req: Request, res: Response) => {
   try {
     // console.log(req.params)
     const userId = req.params.userId
-
     const result = await userService.getSingleUser(userId)
 
-    sendResponse(res, { statusCode: httpStatus.OK, message: 'User getting successfully', status: true, data: result })
+     sendResponse(res, { statusCode: httpStatus.OK, message: 'User getting successfully', status: true, data: result })
+
   } catch (error) {
     res.json({
       status: false,
@@ -66,8 +66,8 @@ const updateUser = async (req: Request, res: Response) => {
     const body = req.body
     const result = await userService.updateUser(userId, body)
 
+   sendResponse(res, { statusCode: httpStatus.OK, message: 'User updated successfully', status: true, data: result })
 
-    sendResponse(res, { statusCode: httpStatus.OK, message: 'User updated successfully', status: true, data: result })
   } catch (error) {
     res.json({
       status: false,
