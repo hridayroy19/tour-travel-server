@@ -2,6 +2,8 @@
 
 import { Request, Response } from 'express'
 import { userService } from './user.service'
+import sendResponse from '../../utils/sendResponse'
+import httpStatus from 'http-status'
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -9,11 +11,13 @@ const createUser = async (req: Request, res: Response) => {
 
     const result = await userService.createUser(payload)
 
-    res.json({
-      status: true,
-      message: 'User created successfully',
-      data: result,
-    })
+    sendResponse(res,
+      {
+        statusCode: httpStatus.OK,
+        message: 'User created successfully',
+        status: true,
+        data: result
+      })
   } catch (error) {
     res.json({
       status: false,
@@ -27,11 +31,9 @@ const getUser = async (req: Request, res: Response) => {
   try {
     const result = await userService.getUser()
 
-    res.send({
-      status: true,
-      message: 'Users getting successfully',
-      result,
-    })
+
+    sendResponse(res, { statusCode: httpStatus.OK, message: 'Users getting successfully', status: true, data: result })
+
   } catch (error) {
     res.json({
       status: false,
@@ -48,11 +50,7 @@ const getSingleUser = async (req: Request, res: Response) => {
 
     const result = await userService.getSingleUser(userId)
 
-    res.send({
-      status: true,
-      message: 'User getting successfully',
-      result,
-    })
+    sendResponse(res, { statusCode: httpStatus.OK, message: 'User getting successfully', status: true, data: result })
   } catch (error) {
     res.json({
       status: false,
@@ -68,11 +66,8 @@ const updateUser = async (req: Request, res: Response) => {
     const body = req.body
     const result = await userService.updateUser(userId, body)
 
-    res.send({
-      status: true,
-      message: 'User updated successfully',
-      result,
-    })
+
+    sendResponse(res, { statusCode: httpStatus.OK, message: 'User updated successfully', status: true, data: result })
   } catch (error) {
     res.json({
       status: false,
@@ -85,13 +80,9 @@ const updateUser = async (req: Request, res: Response) => {
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId
-    await userService.deleteUser(userId)
+    const result = await userService.deleteUser(userId)
 
-    res.send({
-      status: true,
-      message: 'User deleted successfully',
-      result: {},
-    })
+    sendResponse(res, { statusCode: httpStatus.OK, message: 'User deleted successfully', status: true, data: result })
   } catch (error) {
     res.json({
       status: false,
