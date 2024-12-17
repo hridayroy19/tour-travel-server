@@ -1,3 +1,4 @@
+
 import { ITour } from './tour.interface'
 import Tour from './tour.model'
 
@@ -5,15 +6,29 @@ const createTour = async (payload: ITour) => {
   //   const result = await Tour.create(payload)
 
   const data = new Tour(payload)
-
-  //   data.color = "red"
-
   const result = await data.save()
   return result
 }
 
-const getTours = async () => {
-  const result = Tour.find()
+const getTours = async (query: Record<string, unknown>) => {
+  // //{searterm: "searter"}
+
+  const searchTerm = query?.searchTerm || '';
+  //"name", "startLocation", "locations"
+  // console.log(searchTerm);
+  
+  // const result = Tour.find({$or:
+  //   [
+  //     {name: {$regex: searchTerm, $options: "i"}},
+  //     {startLocation:{$regex: searchTerm, $options: "i"}},
+  //     {locations:{$regex:searchTerm, $options: "i"}}
+  //   ]
+  // })
+  const searchableFilds =  ["name", "startLocation","locations" ]
+ 
+   const result = await Tour.find({$or:searchableFilds.map((field)=>({[field]:{$regex:searchTerm, $options:"i" }}))})
+
+
   return result
 }
 
