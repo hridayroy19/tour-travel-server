@@ -25,4 +25,12 @@ app.get('/', (req: Request, res: Response) => {
 //golbal error handelar
 app.use(globalErrorHandler)
 
+//route not found
+app.use("*",(req:Request,  res:Response )=>{
+ res.status(400).json({
+  status:false,
+  message:"Route Not Found"
+ })
+})
+
 export default app
