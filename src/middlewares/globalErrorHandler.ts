@@ -9,9 +9,6 @@ import { handlerDuplicateError } from '../helpers/handleDuplicateError'
 import mongoose from 'mongoose'
 
 
-
-
-
 const globalErrorHandler = (err: any, req: Request, res: Response, _next: NextFunction) => {
   if (err.name && err.name === "ZodError") {
     handlerZodError(err, res)

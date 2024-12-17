@@ -3,6 +3,7 @@ import userRouter from './module/user/user.router'
 import tourRouter from './module/tour/tour.route'
 import globalErrorHandler from './middlewares/globalErrorHandler'
 import bookingRoute from './module/booking/booking.route'
+import { notFound } from './middlewares/notFound'
 
 const app = express()
 
@@ -26,11 +27,6 @@ app.get('/', (req: Request, res: Response) => {
 app.use(globalErrorHandler)
 
 //route not found
-app.use("*",(req:Request,  res:Response )=>{
- res.status(400).json({
-  status:false,
-  message:"Route Not Found"
- })
-})
+app.use(notFound)
 
 export default app
