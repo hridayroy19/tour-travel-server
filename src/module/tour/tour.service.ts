@@ -13,10 +13,20 @@ const createTour = async (payload: ITour) => {
 const getTours = async (query: Record<string, unknown>) => {
   // //{searterm: "searter"}
 
+  const queryObj = { ...query };
+  // console.log("main", query);
+
+
+  const excludingImportant = ["searchTerm"]
+  excludingImportant.forEach(key => delete queryObj[key])
+
+  // console.log("secound",queryObj);
+
+
   const searchTerm = query?.searchTerm || '';
   //"name", "startLocation", "locations"
   // console.log(searchTerm);
-  
+
   // const result = Tour.find({$or:
   //   [
   //     {name: {$regex: searchTerm, $options: "i"}},
@@ -24,13 +34,23 @@ const getTours = async (query: Record<string, unknown>) => {
   //     {locations:{$regex:searchTerm, $options: "i"}}
   //   ]
   // })
-  const searchableFilds =  ["name", "startLocation","locations" ]
- 
-   const result = await Tour.find({$or:searchableFilds.map((field)=>({[field]:{$regex:searchTerm, $options:"i" }}))})
+
+  const searchableFilds = ["name", "startLocation", "locations"]
+
+  //seatching kno kichu metching kore oi data pabo
+  const searchQuery = await Tour.find({ $or: searchableFilds.map((field) => ({ [field]: { $regex: searchTerm, $options: "i" } })) })
+  // const result = await Tour.find({$and:[{$or: searchableFilds.map((field)=> ({[field]: {$regex: searchTerm, $options: "i"}}))}]},queryObj);
+  //    console.log(result);
+
+  //  filtering kore kuni ekta spacifi field pachhi
+  // const result = await searchQuery.find(queryObj);
+  const result = await Tour.find({ $and: [{ $or: searchQuery }, queryObj,], });
 
 
   return result
 }
+
+
 
 const getSingleTour = async (id: string) => {
   const result = Tour.findById(id)
