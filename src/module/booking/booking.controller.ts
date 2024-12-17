@@ -8,20 +8,19 @@ const creatBooking = catchAsync(async (req, res) => {
   const result = await bookingService.createBookingIntoDB(payload)
   sendResponse(res, {
     statusCode: httpStatus.OK,
-    message: 'user create susscsfull',
+    message: 'booking create susscsfull',
     status: true,
     data: result,
   })
 })
 
-
 //get all booking
 
-const getBookng = catchAsync(async(req, res)=>{
+const getBookng = catchAsync(async (req, res) => {
   const result = await bookingService.getBookngIntoDB()
   sendResponse(res, {
     statusCode: httpStatus.OK,
-    message: 'user create susscsfull',
+    message: 'Get all booking susscsfull',
     status: true,
     data: result,
   })
@@ -29,5 +28,5 @@ const getBookng = catchAsync(async(req, res)=>{
 
 export const bookingController = {
   creatBooking,
-  getBookng
+  getBookng,
 }
