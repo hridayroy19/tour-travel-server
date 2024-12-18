@@ -4,12 +4,14 @@ import tourRouter from './module/tour/tour.route'
 import globalErrorHandler from './middlewares/globalErrorHandler'
 import bookingRoute from './module/booking/booking.route'
 import { notFound } from './middlewares/notFound'
+import authRoute from './module/auth/auth.route'
 
 const app = express()
 
 // middleware
 app.use(express.json())
 
+app.use('/api/auth', authRoute)
 app.use('/api/user', userRouter)
 app.use('/api/tour', tourRouter)
 app.use('/api/book', bookingRoute)
