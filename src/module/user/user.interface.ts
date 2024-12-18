@@ -1,3 +1,5 @@
+import { USER_ROLE } from "./user.constants"
+
 export interface IUser {
   name: string
   age?: number
@@ -9,3 +11,4 @@ export interface IUser {
 }
 
 // user interface
+export type TUserRole = keyof typeof USER_ROLE;
