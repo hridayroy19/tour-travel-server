@@ -12,14 +12,27 @@ const register = catchAsync(async (req , res)=>{
         message:"register is successfully",
         data: result
      })
+     }
+)
 
 
+const login = catchAsync(async (req , res)=>{
+    const result = await AuthServer.loginIntoDb(req.body)
 
-
-
+    sendResponse(res,{
+       status:true,
+       statusCode:httpStatus.ACCEPTED,
+       token:result.token,
+       message:"Login is successfully",
+       data:result.veryfiUser
+    })
     }
 )
 
+
+
+
 export const AuthController = {
-    register
+    register,
+    login
 }
