@@ -2,6 +2,8 @@ import { IUser } from "../user/user.interface";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from "../user/user.model";
+import config from "../../config";
+import sendMail from "../../utils/sendEmail";
 
 
 const regiserIntoDb = async (payload: IUser) => {
@@ -53,6 +55,8 @@ const user = await User.findOne({ email: payload?.email }).select('+password');
 const forgetPasswordIntoDb = async(payload:{email:string})=>{
 
   const user = await User.findOne({email:payload?.email})
+  console.log(user,'email');
+  
 
   if(!user){
     throw new Error ('User not found!!')
@@ -68,17 +72,45 @@ const forgetPasswordIntoDb = async(payload:{email:string})=>{
     role: user?.role,
   }
 
-   const token = jwt.sign(jwtPayload,'secreat',{expiresIn:'1h'})
+   const token = jwt.sign(jwtPayload,'secrect',{expiresIn:'1h'})
    
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resetLink =`http://localhost:5173/reset-password?_id=${user?._id}&token=${token}`
-     console.log( resetLink);
-     
+    //  console.log( resetLink);
+     await sendMail(user?.email, "Reset password link", resetLink);
+
 }
 
+const resetPassword = async(payload: {id: string, token:string, password: string})=>{
+  const user = await User.findById(payload.id)
 
+  if(!user){
+    throw new Error('User not found!')
+  }
+
+  if(user?.userStatus === 'inactive'){
+    throw new Error('User is blocked!')
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  jwt.verify(payload.token, "secrect", (err, decoded)=>{
+    if(err){
+      throw new Error('Invalid or expired token')
+    }
+  })
+
+  //hash the new password
+  payload.password = await bcrypt.hash(payload.password, Number(config.becript_solt_ront) )
+  user.password = payload.password
+
+  // console.log(user?.password)
+  const result = await User.findByIdAndUpdate(user._id, user, {new: true})
+  return result;
+}
 
 export const AuthServer = {
     regiserIntoDb,
     loginIntoDb,
-    forgetPasswordIntoDb
+    forgetPasswordIntoDb,
+    resetPassword
 }  

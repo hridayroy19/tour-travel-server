@@ -1,6 +1,7 @@
 import { model, Schema } from 'mongoose'
 import { IUser } from './user.interface'
 import bcrypt from 'bcrypt';
+import config from '../../config';
 
 const userSchema = new Schema<IUser>({
   name: {
@@ -64,7 +65,7 @@ userSchema.pre('save', async function (next) {
   // hashing password and save into DB
   user.password = await bcrypt.hash(
     user.password,
-    Number(12)
+    Number(config.becript_solt_ront)
   )
   next()
 })

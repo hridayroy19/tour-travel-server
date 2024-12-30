@@ -41,12 +41,11 @@ const forgetPassword = catchAsync (async(req , res)=>{
 
 
 const resetPassword = catchAsync (async(req , res)=>{
-    const result =  AuthServer.
-
+    const result =  AuthServer.resetPassword(req.body)
     sendResponse(res,{
        status: true,
        statusCode: httpStatus.ACCEPTED,
-       message: "Password reset link sent to your email",
+       message: "Password reset successfuly",
        data: result
     })
 })
