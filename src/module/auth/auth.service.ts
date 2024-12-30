@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from "../user/user.model";
 
+
 const regiserIntoDb = async (payload: IUser) => {
     const result = await User.create(payload)
     return result
@@ -49,7 +50,35 @@ const user = await User.findOne({ email: payload?.email }).select('+password');
 }
 
 
+const forgetPasswordIntoDb = async(payload:{email:string})=>{
+
+  const user = await User.findOne({email:payload?.email})
+
+  if(!user){
+    throw new Error ('User not found!!')
+  }
+ 
+   if(user.userStatus === 'inactive'){
+    throw new Error ("User is Blocked !")
+   }
+
+   //creat token 
+   const jwtPayload = {
+    email: user?.email,
+    role: user?.role,
+  }
+
+   const token = jwt.sign(jwtPayload,'secreat',{expiresIn:'1h'})
+   
+    const resetLink =`http://localhost:5173/reset-password?_id=${user?._id}&token=${token}`
+     console.log( resetLink);
+     
+}
+
+
+
 export const AuthServer = {
     regiserIntoDb,
-    loginIntoDb
+    loginIntoDb,
+    forgetPasswordIntoDb
 }  

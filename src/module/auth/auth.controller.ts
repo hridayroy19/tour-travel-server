@@ -15,7 +15,6 @@ const register = catchAsync(async (req, res) => {
 }
 )
 
-
 const login = catchAsync(async (req, res) => {
     const result = await AuthServer.loginIntoDb(req.body)
 
@@ -26,10 +25,38 @@ const login = catchAsync(async (req, res) => {
         message: "Login is successfully",
         data: result.veryfiUser
     })
-}
-)
+})
+
+
+const forgetPassword = catchAsync (async(req , res)=>{
+     const result =  AuthServer.forgetPasswordIntoDb(req.body)
+
+     sendResponse(res,{
+        status: true,
+        statusCode: httpStatus.ACCEPTED,
+        message: "Password reset link sent to your email",
+        data: result
+     })
+})
+
+
+const resetPassword = catchAsync (async(req , res)=>{
+    const result =  AuthServer.
+
+    sendResponse(res,{
+       status: true,
+       statusCode: httpStatus.ACCEPTED,
+       message: "Password reset link sent to your email",
+       data: result
+    })
+})
+
+
+
 
 export const AuthController = {
     register,
-    login
+    login,
+    forgetPassword,
+    resetPassword
 }
