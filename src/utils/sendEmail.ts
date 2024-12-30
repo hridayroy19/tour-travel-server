@@ -1,5 +1,6 @@
 
 import nodemailer from 'nodemailer';
+import config from '../config';
 
 const sendMail = async (to: string, subject: string, html: string) => {
 
@@ -9,7 +10,7 @@ const sendMail = async (to: string, subject: string, html: string) => {
         secure: false,
         auth: {
             user: "hrhridoyroy503@gmail.com",
-            pass: "wimw himb zxcg tkry",
+            pass: config.sendmail_pass,
         },
     });
 
