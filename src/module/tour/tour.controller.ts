@@ -102,25 +102,25 @@ const deleteTour = async (req: Request, res: Response) => {
   }
 }
 
-const getNextSchedule = async (req: Request, res: Response) => {
-  try {
-    const id = req.params.id
-    const result = await tourService.getNextSchedule(id)
+// const getNextSchedule = async (req: Request, res: Response) => {
+//   try {
+//     const id = req.params.id
+//     const result = await tourService.getNextSchedule(id)
 
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      message: 'Tours nextschedule successfully',
-      status: true,
-      data: result,
-    })
-  } catch (error) {
-    res.send({
-      success: false,
-      message: 'Something went wrong ',
-      error,
-    })
-  }
-}
+//     sendResponse(res, {
+//       statusCode: httpStatus.OK,
+//       message: 'Tours nextschedule successfully',
+//       status: true,
+//       data: result,
+//     })
+//   } catch (error) {
+//     res.send({
+//       success: false,
+//       message: 'Something went wrong ',
+//       error,
+//     })
+//   }
+// }
 
 export const tourController = {
   createTour,
@@ -128,5 +128,5 @@ export const tourController = {
   getSingleTour,
   updateTour,
   deleteTour,
-  getNextSchedule,
+  // getNextSchedule,
 }

@@ -4,8 +4,6 @@ import { IBooking } from './booking.interface'
 import { Book } from './booking.model'
 
 const createBookingIntoDB = async (payload: IBooking) => {
-
-
   const session = await mongoose.startSession()
 
   session.startTransaction()
@@ -28,7 +26,6 @@ const createBookingIntoDB = async (payload: IBooking) => {
 
     const booking = await Book.create([payload], { session })
 
-
     //available = avialable - bookslots
 
     const updateToure = await Tour.findByIdAndUpdate(
@@ -49,14 +46,11 @@ const createBookingIntoDB = async (payload: IBooking) => {
     await session.endSession()
 
     return booking[0]
-
-
   } catch (error) {
     await session.abortTransaction()
     await session.endSession()
     throw error
   }
-
 }
 
 const getBookngIntoDB = async () => {
