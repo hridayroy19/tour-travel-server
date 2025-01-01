@@ -2,10 +2,19 @@ import { Request, Response } from 'express'
 import { tourService } from './tour.service'
 import sendResponse from '../../utils/sendResponse'
 import httpStatus from 'http-status'
+import catchAsync from '../../utils/catchAsync'
+import { sendImageCloudinary } from '../../helpers/fileUplode'
 
-const createTour = async (req: Request, res: Response) => {
-  try {
-    const body = req.body
+const createTour = catchAsync(async (req: Request, res: Response) => {
+  
+    const body =JSON.parse(req.body.data)
+    if(req.file){
+      const imageName= "Tour";
+      const path = req.file.path
+      const {secure_url} = await sendImageCloudinary(imageName,path)
+      body.coverImage= secure_url
+    }
+
     const result = await tourService.createTour(body)
 
     sendResponse(res, {
@@ -14,14 +23,9 @@ const createTour = async (req: Request, res: Response) => {
       message: 'Tour create successfuly',
       data: result,
     })
-  } catch (error) {
-    res.send({
-      success: false,
-      message: 'Something went wrong',
-      error,
-    })
-  }
 }
+)
+
 
 const getTours = async (req: Request, res: Response) => {
   try {
